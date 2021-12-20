@@ -20,6 +20,276 @@ namespace Probleme_Setul_3
             //P8();
             //P9();
             //P10();
+            //P11();
+            //P12();
+            //P13();
+            //P14();
+            //P15();
+            //P16();
+            //P17();
+            //P18();
+            P19();
+        }
+
+        /// <summary>
+        /// Se da un vector s (vectorul in care se cauta) si un vector p (vectorul care se cauta). Determinati de cate ori
+        /// apare p in s. De ex. Daca s = [1,2,1,2,1,3,1,2,1] si p = [1,2,1] atunci p apare in s de 3 ori. 
+        /// (Problema este dificila doar daca o rezolvati cu un algoritm liniar). 
+        /// </summary>
+        private static void P19()
+        {
+
+        }
+
+        /// <summary>
+        /// Se da un polinom de grad n ai carui coeficienti sunt stocati intr-un vector. Cel mai putin semnificativ
+        /// coeficient este pe pozitia zero in vector. Se cere valoarea polinomului intr-un punct x. 
+        /// </summary>
+        private static void P18()
+        {
+            int n, x, result = 0;
+            Console.Write("n= ");
+            n = int.Parse(Console.ReadLine());
+            Console.Write("x= ");
+            x = int.Parse(Console.ReadLine());
+
+            string line = Console.ReadLine();
+            char[] sep = { ' ', ',', '\n', '\t', '\r' };
+            string[] t = line.Split(sep, StringSplitOptions.RemoveEmptyEntries);
+            int[] v = new int[n + 1];
+            for (int i = 0; i <= n; i++)
+            {
+                v[i] = int.Parse(t[i]);
+            }
+            for (int i = n; i >= 0; i--)
+                result = result + v[i] * (int)Math.Pow(x, i);
+            Console.WriteLine($"Valoarea polinomului in punctul x={x} este {result}");
+        }
+
+        /// <summary>
+        /// Se da un numar n in baza 10 si un numar b, 1 < b < 17. Sa se converteasca si sa se afiseze numarul n in baza b.
+        /// </summary>
+        private static void P17()
+        {
+            int n, b, cifra;
+            Stack<int> digits = new Stack<int>();
+
+            Console.Write("n=");
+            n = int.Parse(Console.ReadLine());
+            Console.Write("b=");
+            b = int.Parse(Console.ReadLine());
+
+            int cn = n;
+            while (cn > 0)
+            {
+                cifra = cn % b;
+                digits.Push(cifra);
+                cn /= b;
+            }
+            StringBuilder sb = new StringBuilder();
+            string map = "0123456789ABCDEF";
+            while (digits.Count > 0)
+            {
+                cifra = digits.Pop();
+                sb.Append(map[cifra]);
+            }
+            Console.WriteLine($"Numarul {n} in baza {b} este { sb.ToString()}");
+        }
+
+        /// <summary>
+        /// Se da un vector de n numere naturale. Determinati cel mai mare divizor comun al elementelor vectorului.
+        /// </summary>
+        private static void P16()
+        {
+            int n, mincmmdc = int.MaxValue;
+            Console.Write("n= ");
+            n = int.Parse(Console.ReadLine());
+
+            string line = Console.ReadLine();
+            char[] sep = { ' ', ',', '\n', '\t', '\r' };
+            string[] t = line.Split(sep, StringSplitOptions.RemoveEmptyEntries);
+            int[] v = new int[n + 1];
+            int[] ap = new int[n + 1];
+            for (int i = 0; i < n; i++)
+            {
+                v[i] = int.Parse(t[i]);
+            }
+            for (int i = 0; i < n - 1; i++)
+            {
+                if (cmmdc(v[i], v[i + 1]) < mincmmdc)
+                    mincmmdc = cmmdc(v[i], v[i + 1]);
+            }
+            Console.WriteLine($"Cel mai mare divizor comun al elementelor vectorului este: {mincmmdc}");
+        }
+
+        private static int cmmdc(int a, int b)
+        {
+            int r;
+            r = a % b;
+            while (r != 0)
+            {
+                a = b;
+                b = r;
+                r = a % b;
+            }
+            return b;
+        }
+
+        /// <summary>
+        /// Modificati un vector prin eliminarea elementelor care se repeta, fara a folosi un alt vector. 
+        /// </summary>
+        private static void P15()
+        {
+            int n;
+            Console.Write("n= ");
+            n = int.Parse(Console.ReadLine());
+
+            string line = Console.ReadLine();
+            char[] sep = { ' ', ',', '\n', '\t', '\r' };
+            string[] t = line.Split(sep, StringSplitOptions.RemoveEmptyEntries);
+            int[] v = new int[n + 1];
+            int[] ap = new int[n + 1];
+            for (int i = 0; i < n; i++)
+            {
+                v[i] = int.Parse(t[i]);
+                ap[v[i]]++;
+            }
+            for (int i = 0; i < n; i++)
+            {
+                if (ap[v[i]] >= 2)
+                {
+                    for (int j = i; j < n; j++)
+                        v[j] = v[j + 1];
+                    n--;
+                    i--;
+                }
+            }
+            for (int i = 0; i < n; i++)
+                Console.Write($"{v[i]} ");
+            Console.WriteLine();
+        }
+
+        /// <summary>
+        /// Interschimbati elementele unui vector in asa fel incat la final toate valorile egale cu zero sa ajunga la
+        /// sfarsit. (nu se vor folosi vectori suplimentari - operatia se va realiza inplace cu un algoritm eficient -
+        /// se va face o singura parcugere a vectorului). 
+        /// </summary>
+        private static void P14()
+        {
+            int n, i;
+
+            Console.Write("Dati dimensiunea vectorului:");
+            n = int.Parse(Console.ReadLine());
+            int[] v = new int[n];
+            string line = Console.ReadLine();
+            char[] sep = { ' ', '\n', '\t', '\r' };
+            string[] t = line.Split(sep, StringSplitOptions.RemoveEmptyEntries);
+
+            for (i = 1; i < n; i++)
+                v[i] = int.Parse(t[i]);
+            for (i = n - 1; i >= 0; i--)
+            {
+                if (v[i] == 0 && v[n - i - 1] != 0)
+                    Swap(v, i, n - i - 1);
+            }
+            for (i = 0; i < n; i++)
+                Console.Write($"{v[i]} ");
+            Console.WriteLine();
+        }
+
+        /// <summary>
+        /// Sortare prin insertie. Implementati algoritmul de sortare <Insertion Sort>. 
+        /// </summary>
+        private static void P13()
+        {
+            int n, i, k;
+
+            Console.Write("Dati dimensiunea vectorului:");
+            n = int.Parse(Console.ReadLine());
+            int[] v = new int[n];
+            string line = Console.ReadLine();
+            char[] sep = { ' ', '\n', '\t', '\r' };
+            string[] t = line.Split(sep, StringSplitOptions.RemoveEmptyEntries);
+
+            for (i = 0; i < n; i++)
+                v[i] = int.Parse(t[i]);
+            for (i = 1; i < n; i++)
+            {
+                for (k = i; k > 0 && v[k] < v[k - 1]; k--)
+                {
+                    Swap(v, k, k - 1);
+                }
+            }
+            for (i = 0; i < n; i++)
+                Console.Write($"{v[i]} ");
+            Console.WriteLine();
+        }
+
+        /// <summary>
+        /// Sortare selectie. Implementati algoritmul de sortare <Selection Sort>. 
+        /// </summary>
+        private static void P12()
+        {
+            int n, i, j, k;
+            Console.Write("Dati dimensiunea vectorului:");
+            n = int.Parse(Console.ReadLine());
+            int[] v = new int[n + 1];
+            string line = Console.ReadLine();
+            char[] sep = { ' ', '\n', '\t', '\r' };
+            string[] t = line.Split(sep, StringSplitOptions.RemoveEmptyEntries);
+
+            for (i = 0; i < n; i++)
+                v[i] = int.Parse(t[i]);
+            for (i = 0; i < n; i++)
+            {
+                k = i;
+                for (j = i + 1; j < n; j++)
+                {
+                    if (v[j] < v[k])
+                    {
+                        k = j;
+                    }
+                }
+                Swap(v, i, k);
+            }
+            for (i = 0; i < n; i++)
+                Console.Write($"{v[i]} ");
+            Console.WriteLine();
+        }
+
+        private static void Swap(int[] v, int i, int j)
+        {
+            int aux;
+            aux = v[i];
+            v[i] = v[j];
+            v[j] = aux;
+        }
+
+        /// <summary>
+        /// Se da un numar natural n. Se cere sa se afiseze toate numerele prime mai mici sau egale cu n (ciurul lui Eratostene).
+        /// </summary>
+        private static void P11()
+        {
+            int n;
+            Console.Write("n=");
+            n = int.Parse(Console.ReadLine());
+            int[] v = new int[n + 1];
+
+            for (int i = 0; i < n; i++)
+                v[i] = 0;
+            v[0] = v[1] = 1;
+            for (int i = 2; i * i <= n; i++)
+            {
+                if (v[i] == 0)
+                {
+                    for (int j = 2; j <= n / i; j++)
+                        v[i * j] = 1;
+                }
+            }
+            for (int i = 1; i <= n; i++)
+                if (v[i] == 0)
+                    Console.Write($"{i} ");
+            Console.WriteLine();
         }
 
         /// <summary>
