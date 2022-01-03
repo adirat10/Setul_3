@@ -28,7 +28,137 @@ namespace Probleme_Setul_3
             //P16();
             //P17();
             //P18();
-            P19();
+            //P19();
+            //P20();?
+            P21();
+        }
+
+        /// <summary>
+        /// Se dau doi vectori. Se cere sa se determine ordinea lor lexicografica (care ar trebui sa apara primul in dictionar). 
+        /// </summary>
+        private static void P21()
+        {
+            Console.Write("v1[] este: ");
+
+            string line1 = Console.ReadLine();
+            char[] sep = { ' ', '\n', '\t', '\r' };
+            string[] t1 = line1.Split(sep, StringSplitOptions.RemoveEmptyEntries);
+
+            Console.Write("v2[] este: ");
+
+            string line2 = Console.ReadLine();
+            string[] t2 = line2.Split(sep, StringSplitOptions.RemoveEmptyEntries);
+
+            int[] v1 = new int[1000];
+            int[] v2 = new int[1000];
+
+            for (int i = 0; i < t1.Length; i++)
+            {
+                v1[i] = int.Parse(t1[i]);
+            }
+            for (int i = 0; i < t2.Length; i++)
+            {
+                v2[i] = int.Parse(t2[i]);
+            }
+
+            bool coincid = true;
+            if (v1.Length == v2.Length)
+            {
+                for (int i = 0; i < v1.Length; i++)
+                    if (v1[i] != v2[i])
+                        coincid = false;
+            }
+            if (coincid)
+            {
+                Console.WriteLine("Cei doi vectori coincid");
+                return;
+            }
+
+            if (v1.Length < v2.Length)
+            {
+                for (int i = 0; i < v1.Length; i++)
+                {
+                    if (v1[i] < v2[i])
+                    {
+                        Console.WriteLine("v1[] este mai mic lexicografic decat v2[]");
+                        return;
+                    }
+                    else if (v1[i] > v2[i])
+                    {
+                        Console.WriteLine("v1[] este mai mare lexicografic decat v2[]");
+                        return;
+                    }
+                }
+            }
+            else
+            {
+                for (int i = 0; i < v2.Length; i++)
+                {
+                    if (v1[i] < v2[i])
+                    {
+                        Console.WriteLine("v1[] este mai mic lexicografic decat v2[]");
+                        return;
+                    }
+                    else if (v1[i] > v2[i])
+                    {
+                        Console.WriteLine("v1[] este mai mare lexicografic decat v2[]");
+                        return;
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Se dau doua siraguri de margele formate din margele albe si negre, notate s1, respectiv s2. Determinati numarul
+        /// de suprapuneri (margea cu margea) a unui sirag peste celalalt astfel incat margelele suprapuse au aceeasi
+        /// culoare. Siragurile de margele se pot roti atunci cand le suprapunem. 
+        /// </summary>
+        private static void P20()
+        {
+            // 0 -> margea alba
+            // 1 -> margea neagra
+            Console.Write("Primul sirag este: ");
+
+            string line1 = Console.ReadLine();
+            char[] sep = { ' ', '\n', '\t', '\r' };
+            string[] t1 = line1.Split(sep, StringSplitOptions.RemoveEmptyEntries);
+
+            Console.Write("Al doilea sirag este: ");
+
+            string line2 = Console.ReadLine();
+            string[] t2 = line2.Split(sep, StringSplitOptions.RemoveEmptyEntries);
+
+            int[] s1 = new int[1000];
+            int[] s2 = new int[1000];
+
+            for (int i = 0; i < t1.Length; i++)
+            {
+                s1[i] = int.Parse(t1[i]);
+            }
+            for (int i = 0; i < t2.Length; i++)
+            {
+                s1[i] = int.Parse(t2[i]);
+            }
+
+            int k = 0;
+
+            if (s1.Length < s2.Length)
+            {
+                for (int i = 0; i < s1.Length; i++)
+                {
+                    if (s1[i] == s2[i])
+                        k++;
+                }
+            }
+            else
+            {
+                for (int i = 0; i < s2.Length; i++)
+                {
+                    if (s1[i] == s2[i])
+                        k++;
+                }
+            }
+            Console.WriteLine($"Numarul de suprapuneri este de {k} ori");
         }
 
         /// <summary>
@@ -38,7 +168,48 @@ namespace Probleme_Setul_3
         /// </summary>
         private static void P19()
         {
+            Console.Write("Vectorul s[] este: ");
 
+            string line1 = Console.ReadLine();
+            char[] sep = { ' ', '\n', '\t', '\r' };
+            string[] t1 = line1.Split(sep, StringSplitOptions.RemoveEmptyEntries);
+
+            Console.Write("Vectorul p[] ese: ");
+
+            string line2 = Console.ReadLine();
+            string[] t2 = line2.Split(sep, StringSplitOptions.RemoveEmptyEntries);
+
+            int[] s = new int[1000];
+            int[] p = new int[1000];
+
+            for (int i = 0; i < t1.Length; i++)
+            {
+                s[i] = int.Parse(t1[i]);
+            }
+
+            for (int i = 0; i < t2.Length; i++)
+            {
+                p[i] = int.Parse(t2[i]);
+            }
+
+            int cate = 0;
+            bool ok;
+
+            for (int i = 0; i < t1.Length; i++)
+            {
+                ok = true;
+                for (int j = 0; j < t2.Length; j++)
+                {
+                    if (s[i + j] != p[j])
+                    {
+                        ok = false;
+                        break;
+                    }
+                }
+                if (ok)
+                    cate++;
+            }
+            Console.WriteLine($"Vectorul p[] apare in vectorul s[] de {cate} ori");
         }
 
         /// <summary>
