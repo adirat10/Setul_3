@@ -30,7 +30,184 @@ namespace Probleme_Setul_3
             //P18();
             //P19();
             //P20();?
-            P21();
+            //P21();
+            //P22();
+            //P23();
+            P24();
+        }
+
+        /// <summary>
+        /// Aceleasi cerinte ca si la problema anterioara dar de data asta elementele sunt stocate ca vectori cu valori 
+        /// binare (v[i] este 1 daca i face parte din multime si este 0 in caz contrar).
+        /// </summary>
+        private static void P24()
+        {
+            
+        }
+
+        /// <summary>
+        /// Aceleasi cerinte ca si la problema anterioara dar de data asta elementele din v1 respectiv v2
+        /// sunt in ordine strict crescatoare. 
+        /// </summary>
+        private static void P23()
+        {
+            Console.Write("v1[] este: ");
+
+            string line1 = Console.ReadLine();
+            char[] sep = { ' ', '\n', '\t', '\r' };
+            string[] t1 = line1.Split(sep, StringSplitOptions.RemoveEmptyEntries);
+
+            Console.Write("v2[] este: ");
+
+            string line2 = Console.ReadLine();
+            string[] t2 = line2.Split(sep, StringSplitOptions.RemoveEmptyEntries);
+
+            int[] v1 = new int[1000];
+            int[] v2 = new int[1000];
+            int k1 = 0;
+            int k2 = 0;
+
+            for (int i = 0; i < t1.Length; i++)
+            {
+                v1[i] = int.Parse(t1[i]);
+                k1++;
+            }
+            for (int i = 0; i < t2.Length; i++)
+            {
+                v2[i] = int.Parse(t2[i]);
+                k2++;
+            }
+            Console.Write($"Intersectia celor doi vectori este: ");
+            for (int i = 0; i < k1; i++)
+                if (cautare_binara(v1[i], v2, k2))
+                    Console.Write($"{v1[i]} ");
+            Console.WriteLine();
+            Console.Write($"Reuniunea celor doi vectori este: ");
+            for (int i = 0; i < k1; i++)
+            {
+                Console.Write($"{v1[i]} ");
+            }
+            for (int i = 0; i < k2; i++)
+                if (!cautare_binara(v2[i], v1, k1))
+                    Console.Write($"{v2[i]} ");
+            Console.WriteLine();
+            Console.Write($"Diferenta v1[]-v2[] este: ");
+            for (int i = 0; i < k1; i++)
+                if (!cautare_binara(v1[i], v2, k2))
+                    Console.Write($"{v1[i]} ");
+            Console.WriteLine();
+            Console.Write($"Diferenta v2[]-v1[] este: ");
+            for (int i = 0; i < k2; i++)
+                if (!cautare_binara(v2[i], v1, k2))
+                    Console.Write($"{v2[i]} ");
+            Console.WriteLine();
+        }
+
+        private static bool cautare_binara(int v, int[] v2, int k)
+        {
+            int p, u, mij;
+            p = 0;
+            u = k;
+            while (p <= u)
+            {
+                mij = (p + u) / 2;
+                if (v == v2[mij])
+                    return true;
+                if (v < v2[mij])
+                    u = mij - 1;
+                else
+                    p = mij + 1;
+            }
+            return false;
+        }
+
+        /// <summary>
+        /// Se dau doi vectori v1 si v2. Se cere sa determine intersectia, reuniunea, si diferentele v1-v2 si v2 -v1 
+        /// (implementarea operatiilor cu multimi). Elementele care se repeta vor fi scrise o singura data in rezultat. 
+        /// </summary>
+        private static void P22()
+        {
+            Console.Write("v1[] este: ");
+
+            string line1 = Console.ReadLine();
+            char[] sep = { ' ', '\n', '\t', '\r' };
+            string[] t1 = line1.Split(sep, StringSplitOptions.RemoveEmptyEntries);
+
+            Console.Write("v2[] este: ");
+
+            string line2 = Console.ReadLine();
+            string[] t2 = line2.Split(sep, StringSplitOptions.RemoveEmptyEntries);
+
+            int[] v1 = new int[1000];
+            int[] v2 = new int[1000];
+
+            for (int i = 0; i < t1.Length; i++)
+            {
+                v1[i] = int.Parse(t1[i]);
+            }
+            for (int i = 0; i < t2.Length; i++)
+            {
+                v2[i] = int.Parse(t2[i]);
+            }
+
+            bool apare;
+            Console.Write($"Intersectia celor doi vectori este: ");
+            for (int i = 0; i < t1.Length; i++)
+            {
+                apare = false;
+                for (int j = 0; j < t2.Length && !apare; j++)
+                    if (v1[i] == v2[j])
+                        apare = true;
+                if (apare)
+                {
+                    Console.Write($"{v1[i]} ");
+                }
+            }
+            Console.WriteLine();
+            Console.Write($"Reuninuea celor doi vectori este: ");
+            for (int i = 0; i < t1.Length; i++)
+            {
+                apare = false;
+                Console.Write($"{v1[i]} ");
+            }
+            for (int i = 0; i < t2.Length; i++)
+            {
+                apare = true;
+                for (int j = 0; j < t1.Length; j++)
+                    if (v2[i] == v1[j])
+                        apare = false;
+                if (apare)
+                {
+                    Console.Write($"{v2[i]} ");
+                }
+            }
+            Console.WriteLine();
+            Console.Write($"Diferenta v1[]-v2[] este: ");
+            for (int i = 0; i < t1.Length; i++)
+            {
+                apare = true;
+                for (int j = 0; j < t2.Length; j++)
+                    if (v1[i] == v2[j])
+                        apare = false;
+                if (apare)
+                {
+                    Console.Write($"{v1[i]} ");
+                }
+            }
+            Console.WriteLine();
+            Console.Write($"Diferenta v2[]-v1[] este: ");
+            for (int i = 0; i < t2.Length; i++)
+            {
+                apare = true;
+                for (int j = 0; j < t1.Length; j++)
+                    if (v2[i] == v1[j])
+                        apare = false;
+                if (apare)
+                {
+                    Console.Write($"{v2[i]} ");
+                }
+            }
+            Console.WriteLine();
         }
 
         /// <summary>
