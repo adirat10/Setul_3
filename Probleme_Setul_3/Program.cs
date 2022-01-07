@@ -33,7 +33,124 @@ namespace Probleme_Setul_3
             //P21();
             //P22();
             //P23();
-            P24();
+            //P24();
+            //P25();
+            P26();
+        }
+
+        /// <summary>
+        /// Se dau doua numere naturale foarte mari (cifrele unui numar foarte mare sunt stocate intr-un vector - 
+        /// fiecare cifra pe cate o pozitie). Se cere sa se determine suma, diferenta si produsul a doua astfel de numere. 
+        /// </summary>
+        private static void P26()
+        {
+            int i, j, n = 0, m = 0, s, d, p;
+            Console.Write("v1[] este: ");
+
+            string line1 = Console.ReadLine();
+            char[] sep = { ' ', '\n', '\t', '\r' };
+            string[] t1 = line1.Split(sep, StringSplitOptions.RemoveEmptyEntries);
+
+            Console.Write("v2[] este: ");
+
+            string line2 = Console.ReadLine();
+            string[] t2 = line2.Split(sep, StringSplitOptions.RemoveEmptyEntries);
+
+            int[] v1 = new int[1000];
+            int[] v2 = new int[1000];
+            int[] suma = new int[1000];
+            int[] dif = new int[1000];
+            int[] produs = new int[2000];
+
+            for (i = 0; i < t1.Length; i++)
+            {
+                v1[i] = int.Parse(t1[i]);
+                n++;
+            }
+            for (i = 0; i < t2.Length; i++)
+            {
+                v2[i] = int.Parse(t2[i]);
+                m++;
+            }
+            s = d = p = 0;
+            int c = 0;
+
+            for (i = n, j = m; i >= 0 || j >= 0; i--, j--)
+            {
+                if (j < 0)
+                {
+                    j = i;
+                    v2[j] = 0;
+                }
+                if (i < 0)
+                {
+                    i = j;
+                    v1[i] = 0;
+                }
+                if (v1[i] + v2[j] + c < 10)
+                {
+                    suma[s++] = v1[i] + v2[j] + c;
+                    c = 0;
+                }
+                else
+                {
+                    suma[s++] = (v1[i] + v2[j] + c) % 10;
+                    c = 1;
+                }
+            }
+            if (c == 1)
+                suma[s++] = c;
+            for (i = s - 1; i > 0; i--)
+                Console.Write($"{suma[i]}");
+            Console.WriteLine();
+        }
+
+        /// <summary>
+        /// (Interclasare) Se dau doi vector sortati crescator v1 si v2. Construiti un al treilea vector ordonat crescator
+        /// format din toate elementele din  v1 si v2. Sunt permise elemente duplicate. 
+        /// </summary>
+        private static void P25()
+        {
+            int i, j, k, n = 0, m = 0;
+            Console.Write("v1[] este: ");
+
+            string line1 = Console.ReadLine();
+            char[] sep = { ' ', '\n', '\t', '\r' };
+            string[] t1 = line1.Split(sep, StringSplitOptions.RemoveEmptyEntries);
+
+            Console.Write("v2[] este: ");
+
+            string line2 = Console.ReadLine();
+            string[] t2 = line2.Split(sep, StringSplitOptions.RemoveEmptyEntries);
+
+            int[] v1 = new int[1000];
+            int[] v2 = new int[1000];
+            int[] v3 = new int[2000];
+
+            for (i = 0; i < t1.Length; i++)
+            {
+                v1[i] = int.Parse(t1[i]);
+                n++;
+            }
+            for (i = 0; i < t2.Length; i++)
+            {
+                v2[i] = int.Parse(t2[i]);
+                m++;
+            }
+            i = j = k = 0;
+            while (i < n && j < m)
+            {
+                if (v1[i] < v2[j])
+                    v3[k++] = v1[i++];
+                else
+                    v3[k++] = v2[j++];
+            }
+            while (i < n)
+                v3[k++] = v1[i++];
+            while (j < m)
+                v3[k++] = v2[j++];
+            for (i = 0; i < k; i++)
+                Console.Write($"{v3[i]} ");
         }
 
         /// <summary>
@@ -42,7 +159,7 @@ namespace Probleme_Setul_3
         /// </summary>
         private static void P24()
         {
-            
+
         }
 
         /// <summary>
