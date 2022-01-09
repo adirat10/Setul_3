@@ -62,17 +62,26 @@ namespace Probleme_Setul_3
             int[] dif = new int[1000];
             int[] produs = new int[2000];
 
+            int[] c1 = new int[1000];
+            int[] c2 = new int[1000];
+
             for (i = 0; i < t1.Length; i++)
             {
                 v1[i] = int.Parse(t1[i]);
+                c1[i] = v1[i];
                 n++;
             }
             for (i = 0; i < t2.Length; i++)
             {
                 v2[i] = int.Parse(t2[i]);
+                c2[i] = v2[i];
                 m++;
             }
+
             s = d = p = 0;
+
+            //suma
+
             int c = 0;
 
             for (i = n, j = m; i >= 0 || j >= 0; i--, j--)
@@ -102,6 +111,31 @@ namespace Probleme_Setul_3
                 suma[s++] = c;
             for (i = s - 1; i > 0; i--)
                 Console.Write($"{suma[i]}");
+            Console.WriteLine();
+
+            //diferenta
+
+            c = 0;
+            for (i = n, j = m; i >= 0 || j >= 0; i--, j--)
+            {
+                if (j < 0)
+                {
+                    j = i;
+                    c2[j] = 0;
+                }
+                if (c1[i] - c >= c2[j])
+                {
+                    dif[d++] = c1[i] - c - c2[j];
+                    c = 0;
+                }
+                else
+                {
+                    dif[d++] = (10 + c1[i] - c) - c2[j];
+                    c = 1;
+                }
+            }
+            for (i = d - 1; i > 0; i--)
+                Console.Write($"{dif[i]}");
             Console.WriteLine();
         }
 
