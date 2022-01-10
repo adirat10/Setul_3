@@ -33,9 +33,261 @@ namespace Probleme_Setul_3
             //P21();
             //P22();
             //P23();
-            //P24();
+            //P24();?
             //P25();
-            P26();
+            //P26();
+            //P27();
+            //P28();
+            //P29();
+            //P30();
+            //P31();
+        }
+
+        /// <summary>
+        /// (Element majoritate). Intr-un vector cu n elemente, un element m este element majoritate daca mai mult de n/2 
+        /// din valorile vectorului sunt egale cu m (prin urmare, daca un vector are element majoritate acesta este unul 
+        /// singur). Sa se determine elementul majoritate al unui vector (daca nu exista atunci se va afisa <nu exista>).
+        /// (incercati sa gasiti o solutie liniara). 
+
+        /// </summary>
+        private static void P31()
+        {
+            int n, m = 0, k;
+            bool exista = false;
+
+            Console.Write("n=");
+            n = int.Parse(Console.ReadLine());
+            string line = Console.ReadLine();
+            char[] sep = { ' ', '\n', '\t', '\r' };
+            string[] t = line.Split(sep, StringSplitOptions.RemoveEmptyEntries);
+
+            int[] v = new int[1000];
+
+            for (int i = 0; i < n; i++)
+            {
+                v[i] = int.Parse(t[i]);
+            }
+            for (int i = 0; i < n; i++)
+            {
+                k = 0;
+                for (int j = 0; j < n; j++)
+                {
+                    if (v[j] == v[i])
+                        k++;
+                }
+                if (k > n / 2)
+                {
+                    m = v[i];
+                    exista = true;
+                }
+            }
+            if (!exista)
+                Console.WriteLine("nu exista");
+            else
+                Console.WriteLine($"Elementul majoritate este {m}");
+        }
+
+        /// <summary>
+        /// Sortare bicriteriala. Se dau doi vectori de numere intregi E si W, unde E[i] este un numar iar W[i] este un
+        /// numar care reprezinta ponderea lui E[i]. Sortati vectorii astfel incat elementele lui E sa fie in ordine
+        /// crescatoare iar pentru doua valori egale din E, cea cu pondere mai mare va fi prima. 
+        /// </summary>
+        private static void P30()
+        {
+            Console.Write("Vectorul E este: ");
+
+            string line1 = Console.ReadLine();
+            char[] sep = { ' ', '\n', '\t', '\r' };
+            string[] t1 = line1.Split(sep, StringSplitOptions.RemoveEmptyEntries);
+
+            Console.Write("Vectorul W este: ");
+
+            string line2 = Console.ReadLine();
+            string[] t2 = line2.Split(sep, StringSplitOptions.RemoveEmptyEntries);
+
+            int[] E = new int[1000];
+            int[] W = new int[1000];
+
+            for (int i = 0; i < t1.Length; i++)
+            {
+                E[i] = int.Parse(t1[i]);
+            }
+            for (int i = 0; i < t2.Length; i++)
+            {
+                W[i] = int.Parse(t2[i]);
+            }
+            for (int i = 0; i < t1.Length - 1; i++)
+            {
+                for (int j = i + 1; j < t1.Length; j++)
+                {
+                    if (E[i] > E[j] || (E[i]) == E[j] && W[i] > W[j])
+                    {
+                        int aux = E[i];
+                        E[i] = E[j];
+                        E[j] = aux;
+                    }
+                }
+            }
+            Console.Write("Vectorul E[] ordonat crescator este: ");
+            for (int i = 0; i < t1.Length; i++)
+                Console.Write($"{E[i]} ");
+            Console.WriteLine();
+        }
+
+        /// <summary>
+        /// MergeSort. Sortati un vector folosind metoda MergeSort.
+        /// </summary>
+        private static void P29()
+        {
+            Console.Write("Dati dimensiunea vectorului: ");
+            int n = int.Parse(Console.ReadLine());
+            int[] v = new int[n];
+
+            Console.Write("Introduceti elementele vectorului: ");
+            string line = Console.ReadLine();
+            char[] sep = { ' ', '\n', '\t', '\r' };
+            string[] t = line.Split(sep, StringSplitOptions.RemoveEmptyEntries);
+
+            for (int i = 0; i < n; i++)
+            {
+                v[i] = int.Parse(t[i]);
+            }
+            MergeSort(v, 0, n - 1);
+            Console.Write("Vectorul ordonat crescator este: ");
+            for (int i = 0; i < n; i++)
+                Console.Write($"{v[i]} ");
+            Console.WriteLine();
+        }
+
+        private static void MergeSort(int[] v, int left, int right)
+        {
+            int mid;
+            if (right > left)
+            {
+                mid = (right + left) / 2;
+                MergeSort(v, left, mid);
+                MergeSort(v, mid + 1, right);
+                MainMerge(v, left, mid + 1, right);
+            }
+        }
+
+        private static void MainMerge(int[] v, int left, int mid, int right)
+        {
+            int[] t = new int[100];
+            int i, poz, u, k;
+            u = mid - 1;
+            poz = left;
+            k = right - left + 1;
+
+            while ((left <= u) && (mid <= right))
+            {
+                if (v[left] <= v[mid])
+                    t[poz++] = v[left++];
+                else
+                    t[poz++] = v[mid++];
+            }
+            while (left <= u)
+                t[poz++] = v[left++];
+            while (mid <= right)
+                t[poz++] = v[mid++];
+            for (i = 0; i < k; i++)
+            {
+                v[right] = t[right];
+                right--;
+            }
+        }
+
+        /// <summary>
+        /// Quicksort. Sortati un vector folosind metoda QuickSort. 
+        /// </summary>
+        private static void P28()
+        {
+            Console.Write("Dati dimensiunea vectorului: ");
+            int n = int.Parse(Console.ReadLine());
+            int[] v = new int[n];
+
+            Console.Write("Introduceti elementele vectorului: ");
+            string line = Console.ReadLine();
+            char[] sep = { ' ', '\n', '\t', '\r' };
+            string[] t = line.Split(sep, StringSplitOptions.RemoveEmptyEntries);
+
+            for (int i = 0; i < n; i++)
+            {
+                v[i] = int.Parse(t[i]);
+            }
+            QuickSort(v, 0, n - 1);
+            Console.Write("Vectorul ordonat crescator este: ");
+            for (int i = 0; i < n; i++)
+                Console.Write($"{v[i]} ");
+            Console.WriteLine();
+        }
+
+        private static void QuickSort(int[] v, int left, int right)
+        {
+            if (left < right)
+            {
+                int pivot = Partition(v, left, right);
+                if (pivot > 1)
+                    QuickSort(v, left, pivot - 1);
+                if (pivot + 1 < right)
+                    QuickSort(v, pivot + 1, right);
+            }
+        }
+
+        private static int Partition(int[] v, int left, int right)
+        {
+            int pivot = v[left];
+            while (true)
+            {
+                while (v[left] < pivot)
+                    left++;
+                while (v[right] > pivot)
+                    right--;
+                if (left < right)
+                {
+                    int aux = v[right];
+                    v[right] = v[left];
+                    v[left] = aux;
+                }
+                else
+                {
+                    return right;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Se da un vector si un index in vectorul respectiv. Se cere sa se determine valoarea din vector care va fi 
+        /// pe pozitia index dupa ce vectorul este sortat. 
+        /// </summary>
+        private static void P27()
+        {
+            int index;
+            int[] v = new int[1000];
+
+            Console.Write("Dati elementele vectorului: ");
+            string line = Console.ReadLine();
+            char[] sep = { ' ', '\n', '\t', '\r' };
+            string[] t = line.Split(sep, StringSplitOptions.RemoveEmptyEntries);
+
+            for (int i = 0; i < t.Length; i++)
+            {
+                v[i] = int.Parse(t[i]);
+            }
+            Console.Write("Index: ");
+            index = int.Parse(Console.ReadLine());
+
+            for (int i = 0; i < t.Length - 1; i++)
+            {
+                for (int j = i + 1; j < t.Length; j++)
+                    if (v[i] > v[j])
+                    {
+                        int aux = v[i];
+                        v[i] = v[j];
+                        v[j] = aux;
+                    }
+            }
+            Console.WriteLine($"Valoarea de pe pozitia index este {v[index]}");
         }
 
         /// <summary>
@@ -44,7 +296,7 @@ namespace Probleme_Setul_3
         /// </summary>
         private static void P26()
         {
-            int i, j, n = 0, m = 0, s, d, p;
+            int i, j, n = 0, m = 0, s, d;
             Console.Write("v1[] este: ");
 
             string line1 = Console.ReadLine();
@@ -60,7 +312,6 @@ namespace Probleme_Setul_3
             int[] v2 = new int[1000];
             int[] suma = new int[1000];
             int[] dif = new int[1000];
-            int[] produs = new int[2000];
 
             int[] c1 = new int[1000];
             int[] c2 = new int[1000];
@@ -78,7 +329,7 @@ namespace Probleme_Setul_3
                 m++;
             }
 
-            s = d = p = 0;
+            s = d = 0;
 
             //suma
 
